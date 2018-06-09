@@ -1,0 +1,28 @@
+#!/bin/bash
+#filters a lcov trace file to remove hidden branches from the coverage report
+#basically, so only your branches are reported
+tmpfile=$(mktemp /tmp/filter-coverage.XXXXX)
+cat "$1" > "$tmpfile"
+files=`awk '/SF:/ {print substr($0, 4);}' $tmpfile`
+for i in $files; do
+    file=`cygpath -w $i`
+    lines=`awk "BEGIN {started=\"0\"} /^[^#\"]*(for|if|while)/ {if(started == \"1\") {numbers=numbers \"|\" NR;} else {numbers=NR; started = \"1\";}} END { print numbers; } " $file`
+    script="! /^BRDA:/ {print \$0;} /^BRDA:($lines),/ {print \$0;}"
+    cat "$1" > "$tmpfile"
+    start="0"
+    while read ln; do
+	if [ "${ln:0:3}" == "SF:" ]; then
+	    if [ "${ln:3}" == "$i" ]; then
+		start="1"
+	    else
+		start="0"
+	    fi
+	fi
+    	if [ "$start" == "1" ]; then
+	    echo "$ln" | awk "$script"
+	else
+	    echo "$ln"
+        fi
+    done < "$tmpfile" > "$1"
+done
+rm "$tmpfile"

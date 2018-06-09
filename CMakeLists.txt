@@ -1,0 +1,38 @@
+cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
+project(compression CXX)
+set(CMAKE_CXX_STANDARD 17)
+SET(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_FLAGS "-I ${PROJECT_SOURCE_DIR}/include -Wall -Wextra -pedantic -Wfatal-errors -fno-inline -fno-inline-small-functions -fno-default-inline --coverage -g -O2")
+add_executable(test_suite test/test.cpp)
+set_property(TARGET test_suite PROPERTY CXX_STANDARD 17)
+set_property(TARGET test_suite PROPERTY CXX_STANDARD_REQUIRED ON)
+
+# install(TARGETS test_suite DESTINATION bin)
+
+ADD_CUSTOM_TARGET(
+    run_test_suite
+    COMMAND lcov -q -c -i -d ${PROJECT_SOURCE_DIR} --no-external -o base.info
+    COMMAND test_suite
+    )
+
+ADD_CUSTOM_TARGET(
+    generate_report
+    DEPENDS coverage.info
+    COMMAND genhtml --demangle-cpp --branch-coverage -q coverage.info --rc genhtml_branch_coverage=1 --output-directory out
+    COMMAND start out/index.html
+    )
+    
+ADD_CUSTOM_TARGET(
+    coverage.info
+    DEPENDS run_test_suite
+    COMMAND lcov -q -c -d ${PROJECT_SOURCE_DIR} --no-external --rc lcov_branch_coverage=1 -o coverage.info
+    COMMAND lcov -q -a base.info -a coverage.info --rc lcov_branch_coverage=1 -o temp-coverage.info
+    COMMAND lcov -q -r temp-coverage.info "*/test/*" --rc lcov_branch_coverage=1 -o coverage.info
+    COMMAND rm base.info temp-coverage.info
+    COMMAND ${PROJECT_SOURCE_DIR}/filter-coverage coverage.info
+    )
+
+ADD_CUSTOM_TARGET(
+    test
+    DEPENDS generate_report
+    )

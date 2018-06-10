@@ -14,14 +14,15 @@
 #ifndef CODECS_HPP_INCLUDED
 #define CODECS_HPP_INCLUDED
 
-#include <type_traits>
+#include <array>
 #include <cmath>
 #include <cstdint>
+#include <exception>
 #include <iostream>
 #include <iterator>
 #include <limits>
+#include <type_traits>
 #include <utility>
-#include <exception>
 
 namespace toy_compression {
 
@@ -35,7 +36,10 @@ namespace toy_compression {
 
 #ifndef ZIGZAG_HPP
 #include "zigzag.hpp"
-#endif //ZIGZAG_HPP
+#endif // ZIGZAG_HPP
 
+#ifndef VARINT_HPP
+#include "varint.hpp"
+#endif // VARINT_HPP
 }
 #endif // CODECS_HPP_INCLUDED

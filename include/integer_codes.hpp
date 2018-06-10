@@ -15,11 +15,11 @@
 #define INTEGER_CODES_HPP
 
 namespace integer_codes {
-  template<typename T>
-  using unsigned_of = typename std::make_unsigned_t<T>;
+   template <typename T>
+   using unsigned_of = typename std::make_unsigned_t<T>;
 
-  template<typename T>
-  using signed_of = typename std::make_signed_t<T>;
+   template <typename T>
+   using signed_of = typename std::make_signed_t<T>;
 
    struct unary {
       template <typename T, typename Iterator,

@@ -14,6 +14,17 @@
 #ifndef CODECS_HPP_INCLUDED
 #define CODECS_HPP_INCLUDED
 
+#include <type_traits>
+#include <cmath>
+#include <cstdint>
+#include <iostream>
+#include <iterator>
+#include <limits>
+#include <utility>
+#include <exception>
+
+namespace toy_compression {
+
 #ifndef BINIO_HPP
 #include "binio.hpp"
 #endif // BINIO_HPP
@@ -22,4 +33,9 @@
 #include "integer_codes.hpp"
 #endif // INTEGER_CODES_HPP
 
+#ifndef ZIGZAG_HPP
+#include "zigzag.hpp"
+#endif //ZIGZAG_HPP
+
+}
 #endif // CODECS_HPP_INCLUDED

@@ -14,11 +14,13 @@
 #ifndef INTEGER_CODES_HPP
 #define INTEGER_CODES_HPP
 
-#include <cmath>
-#include <exception>
-#include <type_traits>
-
 namespace integer_codes {
+  template<typename T>
+  using unsigned_of = typename std::make_unsigned_t<T>;
+
+  template<typename T>
+  using signed_of = typename std::make_signed_t<T>;
+
    struct unary {
       template <typename T, typename Iterator,
                 typename = std::enable_if_t<std::is_unsigned_v<T>>>

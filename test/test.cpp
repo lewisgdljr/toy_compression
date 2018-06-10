@@ -23,6 +23,9 @@ using container = std::vector<std::uint8_t>;
 using iterator  = typename container::iterator;
 
 using test_type = unsigned;
+using signed_test_type = int;
+
+using namespace toy_compression;
 
 using binio::make_bit_reader;
 using binio::make_bit_writer;
@@ -344,8 +347,69 @@ toy_test::test_suite rice_suite
           }},
       }};
 
+void test_zigzag(signed_test_type value)
+{
+  auto encoded = integer_codes::zigzag::encode(value);
+  auto decoded = integer_codes::zigzag::decode(encoded);
+  ASSERT(decoded == value);
+}
+
+toy_test::test_suite zigzag_suite
+   = {"Test for zigzag coder",
+      {
+         {"encodes 0",
+          [] {
+	    test_zigzag( 0 );
+           }
+	 },
+	 {"encodes 1",
+          [] {
+	    test_zigzag( 1 );
+           }
+	 },
+         {"encodes -1",
+          [] {
+	    test_zigzag( -1 );
+           }
+	 },
+
+      }
+};
+
+
+void test_offset_zigzag(signed_test_type value, signed_test_type offset)
+{
+  auto encoded = integer_codes::offset_zigzag::encode(value, offset);
+  auto decoded = integer_codes::offset_zigzag::decode(encoded, offset);
+  ASSERT(decoded == value);
+}
+
+toy_test::test_suite offset_zigzag_suite
+   = {"Test for offset zigzag coder",
+      {
+         {"encodes 0 with offset 12",
+          [] {
+	    test_offset_zigzag( 0, 12 );
+           }
+	 },
+         {"encodes 1 with offset 12",
+          [] {
+	    test_offset_zigzag( 1, 12 );
+           }
+	 },
+         {"encodes -1 with offset 12",
+          [] {
+	    test_offset_zigzag( -1, 12 );
+           }
+	 },
+
+      }
+};
+
+
 int main() {
-   toy_test::run_suites( {bit_reader_suite, bit_writer_suite, unary_suite,
-                          truncated_binary_suite, elias_gamma_suite,
-                          elias_delta_suite, golomb_suite, rice_suite} );
+  toy_test::run_suites( {bit_reader_suite, bit_writer_suite, unary_suite,
+	truncated_binary_suite, elias_gamma_suite,
+			 elias_delta_suite, golomb_suite, rice_suite,
+			 zigzag_suite, offset_zigzag_suite} );
 }

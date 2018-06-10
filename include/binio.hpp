@@ -14,12 +14,6 @@
 #ifndef BINIO_HPP
 #define BINIO_HPP
 
-#include <cstdint>
-#include <iostream>
-#include <iterator>
-#include <limits>
-#include <utility>
-
 namespace binio {
    template <typename Iterator, typename Iterator2>
    struct bit_reader {

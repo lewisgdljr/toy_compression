@@ -31,7 +31,7 @@ namespace toy_test {
       int         line;
    };
 
-   struct test_suite {
+   struct suite {
       const char*            name;
       std::vector<test_case> tests;
 
@@ -66,12 +66,12 @@ namespace toy_test {
       }
    };
 
-   bool run_suite( test_suite const& suite ) { return suite.run(); }
+   bool run_suite( suite const& suite ) { return suite.run(); }
 
-   bool run_suites( std::initializer_list<test_suite const> const suites ) {
+   bool run_suites( std::initializer_list<suite const> const suites ) {
       bool ok = true;
       for ( auto const& a : suites ) {
-         ok &= run_suite( std::forward<test_suite const>( a ) );
+         ok &= run_suite( std::forward<suite const>( a ) );
       }
 
       if ( ok ) {

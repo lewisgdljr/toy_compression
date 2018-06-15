@@ -14,6 +14,7 @@
 #ifndef CODECS_HPP_INCLUDED
 #define CODECS_HPP_INCLUDED
 
+#include "gsl/gsl"
 #include <array>
 #include <cmath>
 #include <cstdint>
@@ -41,5 +42,5 @@ namespace toy_compression {
 #ifndef VARINT_HPP
 #include "varint.hpp"
 #endif // VARINT_HPP
-}
+} // namespace toy_compression
 #endif // CODECS_HPP_INCLUDED

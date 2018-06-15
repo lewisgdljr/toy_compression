@@ -22,16 +22,18 @@ namespace integer_codes {
          constexpr int digits = std::numeric_limits<T>::digits;
          // a varint can't get bigger than this, really
          constexpr int bytes_to_reserve = ( digits + 6 ) / 7;
-         std::array<std::uint8_t, bytes_to_reserve> temp_buffer;
+         std::array<std::uint8_t, bytes_to_reserve> temp_buffer{};
          int pos{bytes_to_reserve - 1}; // last byte
-         temp_buffer[pos--] = static_cast<std::uint8_t>( x & 127 );
+         gsl::at( temp_buffer, pos-- ) = static_cast<std::uint8_t>( x & 127 );
 
          while ( x >>= 7 ) {
             --x;
-            temp_buffer[pos--] = static_cast<std::uint8_t>( 128 | ( x & 127 ) );
+            gsl::at( temp_buffer, pos-- )
+               = static_cast<std::uint8_t>( 128 | ( x & 127 ) );
          }
          for ( pos++; pos < bytes_to_reserve; pos++ ) {
-            storage.template write_bits<std::uint8_t>( temp_buffer[pos], 8 );
+            storage.template write_bits<std::uint8_t>(
+               gsl::at( temp_buffer, pos ), 8 );
          }
       }
 
@@ -41,7 +43,7 @@ namespace integer_codes {
          T            output_val       = 0;
          std::uint8_t continuation_val = 0;
          do {
-            std::uint8_t val = storage.template read_bits<std::uint8_t>( 8 );
+            auto val         = storage.template read_bits<std::uint8_t>( 8 );
             continuation_val = val & 0x80;
             val &= 0x7f;
             if ( continuation_val ) {

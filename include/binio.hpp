@@ -29,6 +29,11 @@ namespace binio {
          buf{0},
          total_count{0},
          bits_left{0} {}
+      bit_reader( bit_reader const& )  = delete;
+      bit_reader( bit_reader const&& ) = delete;
+      bit_reader& operator=( bit_reader const& ) = delete;
+      bit_reader& operator=( bit_reader const&& ) = delete;
+      ~bit_reader()                               = default;
 
       void input_byte() {
          if ( pos == end ) {
@@ -101,8 +106,8 @@ namespace binio {
       }
       bit_writer( bit_writer const& )  = delete;
       bit_writer( bit_writer const&& ) = delete;
-      operator=( bit_writer const& ) = delete;
-      operator=( bit_writer const&& ) = delete;
+      bit_writer& operator=( bit_writer const& ) = delete;
+      bit_writer& operator=( bit_writer const&& ) = delete;
 
       void output_byte() {
          *pos = buf;

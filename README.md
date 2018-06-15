@@ -3,17 +3,22 @@
 This directory contains some toy header-only implementations of compression
 code, developed in a test-driven manner. Right now, there are some
 implementations of simple integer coders, for unary code, truncated binary code,
-elias gamma and delta codes, and Golomb and Rice codes. There's no real
-documentation, but you can probably figure out how to use the code by reading the
-test/test.cpp file. The test/testing.hpp file contains a simple unit test
-framework that is used in this project - I started out using Catch 2, but the
-long compile times (almost 5 minutes when I only had the bit reader and bit
-writer implemented!) deterred me, and I don't need even a tenth of its features.
-The source-code.pdf file has the source code for all of the .cpp and .hpp files
-in the project.
+elias gamma and delta codes, Golomb and Rice codes, a ZigZag encoder to allow
+encoding negative numbers, and a variable-length integer encoder that's similar
+to the varints used by git. There's no real documentation, but you can
+probably figure out how to use the code by reading the test/test.cpp file.
+The test/testing.hpp file contains a simple unit test framework that is used
+in this project - I started out using Catch 2, but the long compile times
+(almost 5 minutes when I only had the bit reader and bit writer implemented!)
+deterred me, and I don't need even a tenth of its features.
 
-To compile and test the coders under Linux, Cygwin, and/or Msys2, do the
-following:
+The source-code.pdf file has the source code for all of the .cpp and .hpp files
+in the project, except that the include/gsl directory contains the source code
+of  gsl-lite, from https://github.com/martinmoene/gsl-lite, slightly modified
+so that I can run cpp-tidy (via the included "lint" script) and get no warnings
+or errors.
+
+To compile and test the coders under Linux or Cygwin do the following:
 
 ```bash
 mkdir build
@@ -21,13 +26,22 @@ cd build
 cmake .. && make test
 ```
 
-This requires that you have gcc 7 (for working C++17 support), gcov, cmake,
-lcov, awk, bash, and a web browser installed, and it will run the test suite
-and generate a code coverage report. I'm filtering the branch coverage to
-remove the stray branches inserted by the compiler (I only care about branches
-I created myself), and also to remove the test framework and test cases
-themselves from the output. Right now, I have 100% line, function, and branch
-coverage. I intend to keep it that way.
+To do this under mingw-w64/msys2, you need to change the commands to:
+
+```bash
+mkdir build
+cd build
+cmake .. -G'Unix Makefiles' && make test
+```
+
+This requires that you have gcc 7 or 8 (for working C++17 support and
+working gcov), gcov, cmake, lcov, awk, bash, and a web browser installed,
+and it will run the test suite and generate a code coverage report. I'm
+filtering the branch coverage to remove the stray branches inserted by the
+compiler (I only care about branches I created myself), and also to remove
+the test framework, gsl-lite, and the test cases themselves from the output.
+Right now, I have 100% line, function, and branch coverage. I intend to keep
+it that way.
 
 The references below are in roughly the order that I'm planning on using them
 as sources of inspiration for the code in this repository. I also intend to

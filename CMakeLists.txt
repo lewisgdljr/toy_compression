@@ -2,8 +2,15 @@ cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 project(compression CXX)
 set(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_CXX_FLAGS "-I ${PROJECT_SOURCE_DIR}/include -Wall -Wextra -pedantic -Wfatal-errors -fno-inline -fno-inline-small-functions -fno-default-inline --coverage -g -O2")
+set(GSL_LITE_INCLUDE_DIR include)
+add_library(gsl INTERFACE)
+add_library(toy_compress INTERFACE)
+target_include_directories(gsl INTERFACE ${GSL_LITE_INCLUDE_DIR}
+                           toy_compress include)
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -pedantic -Wfatal-errors -fno-inline -fno-inline-small-functions -fno-default-inline --coverage -g -O2")
 add_executable(test_suite test/test.cpp)
+target_link_libraries(test_suite PRIVATE gsl)
+target_link_libraries(test_suite PRIVATE toy_compress)
 set_property(TARGET test_suite PROPERTY CXX_STANDARD 17)
 set_property(TARGET test_suite PROPERTY CXX_STANDARD_REQUIRED ON)
 
@@ -27,7 +34,7 @@ ADD_CUSTOM_TARGET(
     DEPENDS run_test_suite
     COMMAND lcov -q -c -d ${PROJECT_SOURCE_DIR} --no-external --rc lcov_branch_coverage=1 -o coverage.info
     COMMAND lcov -q -a base.info -a coverage.info --rc lcov_branch_coverage=1 -o temp-coverage.info
-    COMMAND lcov -q -r temp-coverage.info "*/test/*" --rc lcov_branch_coverage=1 -o coverage.info
+    COMMAND lcov -q -r temp-coverage.info "*/test/*" "*/gsl/*" --rc lcov_branch_coverage=1 -o coverage.info
     COMMAND rm base.info temp-coverage.info
     COMMAND ${PROJECT_SOURCE_DIR}/filter-coverage coverage.info
     )

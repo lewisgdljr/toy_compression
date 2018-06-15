@@ -13,10 +13,9 @@ in this project - I started out using Catch 2, but the long compile times
 deterred me, and I don't need even a tenth of its features.
 
 The source-code.pdf file has the source code for all of the .cpp and .hpp files
-in the project, except that the include/gsl directory contains the source code
-of  gsl-lite, from https://github.com/martinmoene/gsl-lite, slightly modified
-so that I can run cpp-tidy (via the included "lint" script) and get no warnings
-or errors.
+in the project, except for those in the include/gsl directory, which contains the source code of  gsl-lite, from https://github.com/martinmoene/gsl-lite,
+slightly modified so that I can run clang-tidy (via the included "lint" script) and get no warnings or errors. I'm using a LOT of the checks available in
+clang-tidy, including several families of clang static analyzer analysis checks.
 
 To compile and test the coders under Linux or Cygwin do the following:
 

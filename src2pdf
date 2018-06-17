@@ -29,7 +29,7 @@ EOF
 # find . -type f -name "*.c" -name "*.h" -name "*.imp" ! -regex ".*/\..*" ! -name ".*" ! -name "*~" ! -name 'src2pdf'|
 # sed 's/^\..//' |                 ## Change ./foo/bar.src to foo/bar.src
 
-find . \( -iname "*.c" -o -iname "*.h" -o -name "*.imp" -o -name "*.cpp" -o -name "*.hpp" -o -name "*.cc" -o -name "*.cxx" -o -name "*.hxx" -o -name "*.hh" -o -iname ".c++" -o -iname "*.h++" \) -a -not \( -ipath "*/gsl-lite/*" -o -ipath "*/build/*" \) -a \( \( -not -ipath "*/toy_test/*" \) -o -name "testing.hpp" \) | sed 's/^\..//' |
+find . \( -iname "*.c" -o -iname "*.h" -o -name "*.imp" -o -name "*.cpp" -o -name "*.hpp" -o -name "*.cc" -o -name "*.cxx" -o -name "*.hxx" -o -name "*.hh" -o -iname ".c++" -o -iname "*.h++" \) -a -not \( -ipath "*/gsl-lite/*" -o -ipath "*/build/*" \) -a \( \( -not -ipath "*/toy_test/*" \) -o -name "toy_test.hpp" \) | sed 's/^\..//' |
 while read  i; do                ## Loop through each file
     name=${i//_/\\_}             ## escape underscores
     echo "\newpage" >> $tex_file   ## start each section on a new page

@@ -10,7 +10,7 @@
  * <http://creativecommons.org/publicdomain/zero/1.0/>.
  */
 
-#include "testing.hpp"
+#include "toy_test.hpp"
 #include "toy_compression.hpp"
 #include <cstdint>
 #include <iomanip>

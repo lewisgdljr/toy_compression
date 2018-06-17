@@ -4,18 +4,20 @@ This directory contains some toy header-only implementations of compression
 code, developed in a test-driven manner. Right now, there are some
 implementations of simple integer coders, for unary code, truncated binary code,
 elias gamma and delta codes, Golomb and Rice codes, a ZigZag encoder to allow
-encoding negative numbers, and a variable-length integer encoder that's similar
-to the varints used by git. There's no real documentation, but you can
-probably figure out how to use the code by read1ing the test/test.cpp file.
-The test/testing.hpp file contains a simple unit test framework that is used
-in this project - I started out using Catch 2, but the long compile times
+encoding negative numbers and zero in those codes that otherwise can't, and a
+variable-length integer encoder that's similar to the varints used by git.
+There's no real documentation, but you can probably figure out how to use
+the code by reading the test/test.cpp file and the headers it includes.
+
+The toy_test/toy_test.hpp file contains a simple unit test framework that is
+used in this project - I started out using Catch 2, but the long compile times
 (almost 5 minutes when I only had the bit reader and bit writer implemented!)
 deterred me, and I don't need even a tenth of its features.
 
 The source-code.pdf file has the source code for all of the .cpp and .hpp files
 in the project, except for those in the gsl-lite/ directory (which is a
 submodule pointing to https://github.com/martinmoene/gsl-lite). Don't forget
-to run `git submodule init` and `git submodule update` to update the submodule,
+to run `git submodule init` and `git submodule update` to update the submodules,
 or use the `--recurse-submodules` option to `git clone`.
 
 I'm running clang-tidy on my code, with no warnings or errors. I'm using a

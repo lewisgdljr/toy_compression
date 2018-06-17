@@ -5,8 +5,11 @@ SET(CMAKE_CXX_EXTENSIONS OFF)
 set(GSL_LITE_INCLUDE_DIR gsl-lite/include)
 add_library(gsl INTERFACE)
 add_library(toy_compress INTERFACE)
+add_library(toy_test INTERFACE)
 target_include_directories(gsl INTERFACE ${GSL_LITE_INCLUDE_DIR}
-                           toy_compress include)
+                           toy_compress INTERFACE include
+			   toy_test INTERFACE toy_test)
+
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -pedantic -Wfatal-errors -fno-inline -fno-inline-small-functions -fno-default-inline --coverage -g -O2")
 add_executable(test_suite test/test.cpp)
 target_link_libraries(test_suite PRIVATE gsl)
@@ -34,7 +37,7 @@ ADD_CUSTOM_TARGET(
     DEPENDS run_test_suite
     COMMAND lcov -q -c -d ${PROJECT_SOURCE_DIR} --no-external --rc lcov_branch_coverage=1 -o coverage.info
     COMMAND lcov -q -a base.info -a coverage.info --rc lcov_branch_coverage=1 -o temp-coverage.info
-    COMMAND lcov -q -r temp-coverage.info "*/test/*" "*/gsl/*" --rc lcov_branch_coverage=1 -o coverage.info
+    COMMAND lcov -q -r temp-coverage.info "*/test/*" "*/gsl/*" "*/toy_test/*" --rc lcov_branch_coverage=1 -o coverage.info
     COMMAND rm base.info temp-coverage.info
     COMMAND ${PROJECT_SOURCE_DIR}/filter-coverage coverage.info
     )

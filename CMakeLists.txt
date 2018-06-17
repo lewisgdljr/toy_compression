@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 project(compression CXX)
 set(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_CXX_EXTENSIONS OFF)
-set(GSL_LITE_INCLUDE_DIR include)
+set(GSL_LITE_INCLUDE_DIR gsl-lite/include)
 add_library(gsl INTERFACE)
 add_library(toy_compress INTERFACE)
 target_include_directories(gsl INTERFACE ${GSL_LITE_INCLUDE_DIR}

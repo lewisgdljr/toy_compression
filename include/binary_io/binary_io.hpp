@@ -11,10 +11,8 @@
  */
 
 #pragma once
-#ifndef BINIO_HPP
-#define BINIO_HPP
 
-namespace binio {
+namespace binary_io {
    template <typename Iterator, typename Iterator2>
    struct bit_reader {
       Iterator      pos;
@@ -155,5 +153,3 @@ namespace binio {
       return make_bit_writer( std::ostream_iterator<unsigned char>( stream ) );
    }
 } // namespace binio
-
-#endif // BINIO_HPP

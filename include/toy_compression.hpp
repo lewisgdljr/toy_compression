@@ -11,8 +11,8 @@
  */
 
 #pragma once
-#ifndef CODECS_HPP_INCLUDED
-#define CODECS_HPP_INCLUDED
+#ifndef TOY_COMPRESSION_HPP_INCLUDED
+#define TOY_COMPRESSION_HPP_INCLUDED
 
 #include "gsl/gsl"
 #include <array>
@@ -26,21 +26,9 @@
 #include <utility>
 
 namespace toy_compression {
+  
+#include "binary_io/binary_io.hpp"
+#include "integer_codes/integer_codes.hpp"
 
-#ifndef BINIO_HPP
-#include "binio.hpp"
-#endif // BINIO_HPP
-
-#ifndef INTEGER_CODES_HPP
-#include "integer_codes.hpp"
-#endif // INTEGER_CODES_HPP
-
-#ifndef ZIGZAG_HPP
-#include "zigzag.hpp"
-#endif // ZIGZAG_HPP
-
-#ifndef VARINT_HPP
-#include "varint.hpp"
-#endif // VARINT_HPP
 } // namespace toy_compression
-#endif // CODECS_HPP_INCLUDED
+#endif // TOY_COMPRESSION_HPP_INCLUDED

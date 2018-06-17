@@ -10,7 +10,7 @@
  * <http://creativecommons.org/publicdomain/zero/1.0/>.
  */
 
-#include "codecs.hpp"
+#include "toy_compression.hpp"
 #include "testing.hpp"
 #include <cstdint>
 #include <iomanip>
@@ -27,8 +27,8 @@ using signed_test_type = int;
 
 using namespace toy_compression;
 
-using binio::make_bit_reader;
-using binio::make_bit_writer;
+using binary_io::make_bit_reader;
+using binary_io::make_bit_writer;
 
 /* subsystem test functions... */
 void test_unary_coder( test_type value ) {

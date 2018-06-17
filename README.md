@@ -13,9 +13,10 @@ in this project - I started out using Catch 2, but the long compile times
 deterred me, and I don't need even a tenth of its features.
 
 The source-code.pdf file has the source code for all of the .cpp and .hpp files
-in the project, except for those in the gsl-lite/ directory, is a submodule
-pointing to https://github.com/martinmoene/gsl-lite. Don't forget to run
-`git submodule init` and `git submodule update` to update the submodule.
+in the project, except for those in the gsl-lite/ directory (which is a
+submodule pointing to https://github.com/martinmoene/gsl-lite). Don't forget
+to run `git submodule init` and `git submodule update` to update the submodule,
+or use the `--recurse-submodules` option to `git clone`.
 
 I'm running clang-tidy on my code, with no warnings or errors. I'm using a
 LOT of the checks available in clang-tidy, including several groups of

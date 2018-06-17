@@ -1,6 +1,6 @@
 #!/bin/bash
 
 CHECKS=clang-diagnostic-*,clang-analyzer-*,cppcoreguidelines-*,modernize-*,-clang-analyzer-osx*,misc-,performance-*,readability-*,bugprone-*,-clang-diagnostic-c++11-extensions*
-INCLUDES="-I ./include -I ./gsl-lite/include"
+INCLUDES="-I ./include -I ./gsl-lite/include -I ./toy_test"
 
 clang-tidy -quiet -header-filter="./" -line-filter="[{\"name\":\"gsl.hpp\"}]"  -checks="$CHECKS" test/test.cpp -- -std=c++17 $INCLUDES 2>/dev/null

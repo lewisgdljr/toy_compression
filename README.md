@@ -6,7 +6,7 @@ implementations of simple integer coders, for unary code, truncated binary code,
 elias gamma and delta codes, Golomb and Rice codes, a ZigZag encoder to allow
 encoding negative numbers, and a variable-length integer encoder that's similar
 to the varints used by git. There's no real documentation, but you can
-probably figure out how to use the code by reading the test/test.cpp file.
+probably figure out how to use the code by read1ing the test/test.cpp file.
 The test/testing.hpp file contains a simple unit test framework that is used
 in this project - I started out using Catch 2, but the long compile times
 (almost 5 minutes when I only had the bit reader and bit writer implemented!)

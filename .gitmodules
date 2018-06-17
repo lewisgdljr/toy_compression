@@ -1,3 +1,6 @@
 [submodule "gsl-lite"]
 	path = gsl-lite
 	url = https://github.com/martinmoene/gsl-lite
+[submodule "toy_test"]
+	path = toy_test
+	url = https://github.com/lewisgdljr/toy_test

@@ -19,11 +19,11 @@ namespace integer_codes {
    template <typename T>
    using signed_of = typename std::make_signed_t<T>;
 
-#include "elias_delta.hpp"
-#include "elias_gamma.hpp"
-#include "golomb_rice.hpp"
-#include "truncated_binary.hpp"
 #include "unary.hpp"
+#include "truncated_binary.hpp"
+#include "elias_gamma.hpp"
+#include "elias_delta.hpp"
+#include "golomb_rice.hpp"
 #include "varint.hpp"
 #include "zigzag.hpp"
 

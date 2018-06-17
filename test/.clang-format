@@ -28,6 +28,7 @@ KeepEmptyLinesAtTheStartOfBlocks: false
 MaxEmptyLinesToKeep: 1
 NamespaceIndentation: All
 PointerAlignment: Left
+SortIncludes: false
 SpacesInParentheses: true
 Standard:        Cpp11
 TabWidth:        3

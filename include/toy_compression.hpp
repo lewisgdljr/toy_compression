@@ -26,7 +26,7 @@
 #include <utility>
 
 namespace toy_compression {
-  
+
 #include "binary_io/binary_io.hpp"
 #include "integer_codes/integer_codes.hpp"
 

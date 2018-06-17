@@ -12,29 +12,28 @@
 
 #pragma once
 
-
 struct unary {
-  template <typename T, typename Iterator,
-	    typename = std::enable_if_t<std::is_unsigned_v<T>>>
-  static void encode( T x, binary_io::bit_writer<Iterator>& storage ) {
-    if ( x == 0 ) {
-      throw std::invalid_argument( "unary code can't encode 0" );
-    }
-    T temp{x};
-    while ( temp > 1 ) {
-      --temp;
-      storage.write_bit( 0 );
-    }
-    storage.write_bit( 1 );
-  }
+   template <typename T, typename Iterator,
+             typename = std::enable_if_t<std::is_unsigned_v<T>>>
+   static void encode( T x, binary_io::bit_writer<Iterator>& storage ) {
+      if ( x == 0 ) {
+         throw std::invalid_argument( "unary code can't encode 0" );
+      }
+      T temp{x};
+      while ( temp > 1 ) {
+         --temp;
+         storage.write_bit( 0 );
+      }
+      storage.write_bit( 1 );
+   }
 
-  template <typename T, typename Iterator, typename Iterator2,
-	    typename = std::enable_if_t<std::is_unsigned_v<T>>>
-  static T decode( binary_io::bit_reader<Iterator, Iterator2>& storage ) {
-    T temp{1};
-    while ( !storage.read_bit() ) {
-      ++temp;
-    }
-    return temp;
-  }
+   template <typename T, typename Iterator, typename Iterator2,
+             typename = std::enable_if_t<std::is_unsigned_v<T>>>
+   static T decode( binary_io::bit_reader<Iterator, Iterator2>& storage ) {
+      T temp{1};
+      while ( !storage.read_bit() ) {
+         ++temp;
+      }
+      return temp;
+   }
 };

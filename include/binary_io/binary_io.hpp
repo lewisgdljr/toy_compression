@@ -152,4 +152,4 @@ namespace binary_io {
       make_bit_writer( std::ostream_iterator<unsigned char>( stream ) ) ) {
       return make_bit_writer( std::ostream_iterator<unsigned char>( stream ) );
    }
-} // namespace binio
+} // namespace binary_io

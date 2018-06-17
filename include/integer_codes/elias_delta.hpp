@@ -13,22 +13,22 @@
 #pragma once
 
 struct elias_delta {
-  template <typename T, typename Iterator,
-	    typename = std::enable_if_t<std::is_unsigned_v<T>>>
-  static void encode( T x, binary_io::bit_writer<Iterator>& storage ) {
-    if ( x == 0 ) {
-      throw std::invalid_argument( "elias delta code can't encode 0" );
-    }
-    auto b = 1 + static_cast<T>( std::floor( std::log2( x ) ) );
-    elias_gamma::template encode<T>( b, storage );
-    storage.template write_bits<T>( ( x - ( 1 << ( b - 1 ) ) ), b - 1 );
-  }
+   template <typename T, typename Iterator,
+             typename = std::enable_if_t<std::is_unsigned_v<T>>>
+   static void encode( T x, binary_io::bit_writer<Iterator>& storage ) {
+      if ( x == 0 ) {
+         throw std::invalid_argument( "elias delta code can't encode 0" );
+      }
+      auto b = 1 + static_cast<T>( std::floor( std::log2( x ) ) );
+      elias_gamma::template encode<T>( b, storage );
+      storage.template write_bits<T>( ( x - ( 1 << ( b - 1 ) ) ), b - 1 );
+   }
 
-  template <typename T, typename Iterator, typename Iterator2,
-	    typename = std::enable_if_t<std::is_unsigned_v<T>>>
-  static T decode( binary_io::bit_reader<Iterator, Iterator2>& storage ) {
-    auto b = elias_gamma::template decode<T>( storage );
-    auto x = storage.template read_bits<T>( b - 1 );
-    return ( 1 << ( b - 1 ) ) + x;
-  }
+   template <typename T, typename Iterator, typename Iterator2,
+             typename = std::enable_if_t<std::is_unsigned_v<T>>>
+   static T decode( binary_io::bit_reader<Iterator, Iterator2>& storage ) {
+      auto b = elias_gamma::template decode<T>( storage );
+      auto x = storage.template read_bits<T>( b - 1 );
+      return ( 1 << ( b - 1 ) ) + x;
+   }
 };

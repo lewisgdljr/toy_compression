@@ -68,7 +68,7 @@ namespace toy_test {
 
    bool run_suite( suite const& suite ) { return suite.run(); }
 
-   bool run_suites( std::initializer_list<suite const> const suites ) {
+   bool run_suites( std::initializer_list<suite const> const& suites ) {
       bool ok = true;
       for ( auto const& a : suites ) {
          ok &= run_suite( std::forward<suite const>( a ) );

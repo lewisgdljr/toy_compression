@@ -36,7 +36,8 @@ namespace integer_codes {
       constexpr static auto decode( const T x ) -> signed_of<T> {
 #define BIT_HACK
 #ifdef BIT_HACK
-         const signed_of<T> sign      = -( ( x & 1 ) && ( x != 1 ) );
+         const signed_of<T> sign
+            = -static_cast<signed_of<T>>( ( x & 1 ) && ( x != 1 ) );
          const signed_of<T> magnitude = x >> 1;
          return ( magnitude + sign ) ^ sign;
 #else

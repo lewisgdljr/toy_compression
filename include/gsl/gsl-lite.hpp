@@ -529,7 +529,7 @@ struct is_array<T[N]> : std::true_type {};
 //
 
 // index type for all container indexes/subscripts/sizes
-typedef gsl_CONFIG_SPAN_INDEX_TYPE index;   // p0122r3 uses std::ptrdiff_t //NOLINT
+typedef gsl_CONFIG_SPAN_INDEX_TYPE index;   // p0122r3 uses std::ptrdiff_t
 
 //
 // GSL.owner: ownership pointers
@@ -638,7 +638,7 @@ gsl_api inline gsl_constexpr14 void fail_fast_assert( bool cond, char const * co
 
 gsl_api inline gsl_constexpr14 void fail_fast_assert( bool cond ) gsl_noexcept
 {
-    if ( !cond ) //NOLINT
+    if ( !cond )
         std::terminate();
 }
 
@@ -707,7 +707,7 @@ public:
 
     gsl_api virtual ~final_action() gsl_noexcept
     {
-        if ( invoke_ ) //NOLINT
+        if ( invoke_ )
             action_();
     }
 
@@ -1010,7 +1010,7 @@ template< class T, size_t N >
 gsl_api inline gsl_constexpr14 T & at( std::array<T, N> & arr, size_t index )
 {
     Expects( index < N );
-    return arr[index]; //NOLINT
+    return arr[index];
 }
 #endif
 
@@ -1056,7 +1056,7 @@ class not_null
 #if gsl_CONFIG( NOT_NULL_GET_BY_CONST_REF )
     typedef T const & get_result_t;
 #else
-    typedef T get_result_t; //NOLINT
+    typedef T get_result_t;
 #endif
 
 public:
@@ -1084,9 +1084,9 @@ public:
     
 #if gsl_HAVE( IS_DEFAULT )
     gsl_api                ~not_null() = default;
-    gsl_api gsl_constexpr   not_null( not_null &&      other ) = default; //NOLINT
+    gsl_api gsl_constexpr   not_null( not_null &&      other ) = default;
     gsl_api gsl_constexpr   not_null( not_null const & other ) = default;
-    gsl_api                 not_null & operator=( not_null &&      other ) = default; //NOLINT
+    gsl_api                 not_null & operator=( not_null &&      other ) = default;
     gsl_api                 not_null & operator=( not_null const & other ) = default;
 #else
     gsl_api                ~not_null() {};
@@ -1386,7 +1386,7 @@ gsl_api inline gsl_constexpr byte operator~( byte b ) gsl_noexcept
 
 // Tag to select span constructor taking a container (prevent ms-gsl warning C26426):
 
-struct with_container_t { gsl_constexpr with_container_t() gsl_noexcept {} }; //NOLINT
+struct with_container_t { gsl_constexpr with_container_t() gsl_noexcept {} };
 const  gsl_constexpr   with_container_t with_container;
 
 #endif
@@ -1425,23 +1425,23 @@ class span
     template< class U > friend class span;
 
 public:
-    typedef index index_type; //NOLINT
+    typedef index index_type;
 
-    typedef T element_type; //NOLINT
-    typedef typename details::remove_cv< T >::type value_type; //NOLINT
+    typedef T element_type;
+    typedef typename details::remove_cv< T >::type value_type;
 
-    typedef T & reference; //NOLINT
-    typedef T * pointer; //NOLINT
-    typedef T const * const_pointer; //NOLINT
-    typedef T const & const_reference; //NOLINT
+    typedef T & reference;
+    typedef T * pointer;
+    typedef T const * const_pointer;
+    typedef T const & const_reference;
 
-    typedef pointer       iterator; //NOLINT
-    typedef const_pointer const_iterator; //NOLINT
+    typedef pointer       iterator;
+    typedef const_pointer const_iterator;
 
-    typedef std::reverse_iterator< iterator >       reverse_iterator; //NOLINT
-    typedef std::reverse_iterator< const_iterator > const_reverse_iterator; //NOLINT
+    typedef std::reverse_iterator< iterator >       reverse_iterator;
+    typedef std::reverse_iterator< const_iterator > const_reverse_iterator;
 
-    typedef typename std::iterator_traits< iterator >::difference_type difference_type; //NOLINT
+    typedef typename std::iterator_traits< iterator >::difference_type difference_type;
 
     // 26.7.3.2 Constructors, copy, and assignment [span.cons]
 
@@ -1612,13 +1612,13 @@ public:
 #if gsl_FEATURE_TO_STD( WITH_CONTAINER )
 
     template< class Container >
-    gsl_api gsl_constexpr span( with_container_t, Container & cont ) //NOLINT
+    gsl_api gsl_constexpr span( with_container_t, Container & cont )
         : first_( cont.size() == 0 ? gsl_nullptr : gsl_ADDRESSOF( cont[0] ) )
         , last_ ( cont.size() == 0 ? gsl_nullptr : gsl_ADDRESSOF( cont[0] ) + cont.size() )
     {}
 
     template< class Container >
-    gsl_api gsl_constexpr span( with_container_t, Container const & cont ) //NOLINT
+    gsl_api gsl_constexpr span( with_container_t, Container const & cont )
         : first_( cont.size() == 0 ? gsl_nullptr : gsl_ADDRESSOF( cont[0] ) )
         , last_ ( cont.size() == 0 ? gsl_nullptr : gsl_ADDRESSOF( cont[0] ) + cont.size() )
     {}
@@ -2066,14 +2066,14 @@ make_span( std::vector<T> const & cont )
 
 template< class Container >
 gsl_api inline gsl_constexpr span<typename Container::value_type>
-make_span( with_container_t, Container & cont ) gsl_noexcept //NOLINT
+make_span( with_container_t, Container & cont ) gsl_noexcept
 {
     return span< typename Container::value_type >( with_container, cont );
 }
 
 template< class Container >
 gsl_api inline gsl_constexpr span<const typename Container::value_type>
-make_span( with_container_t, Container const & cont ) gsl_noexcept //NOLINT
+make_span( with_container_t, Container const & cont ) gsl_noexcept
 {
     return span< const typename Container::value_type >( with_container, cont );
 }
@@ -2102,14 +2102,14 @@ template< class T >
 gsl_api inline gsl_constexpr span<byte>
 byte_span( T & t ) gsl_noexcept
 {
-    return span<byte>( reinterpret_cast<byte *>( &t ), sizeof(T) ); //NOLINT
+    return span<byte>( reinterpret_cast<byte *>( &t ), sizeof(T) );
 }
 
 template< class T >
 gsl_api inline gsl_constexpr span<const byte>
 byte_span( T const & t ) gsl_noexcept
 {
-    return span<const byte>( reinterpret_cast<byte const *>( &t ), sizeof(T) ); //NOLINT
+    return span<const byte>( reinterpret_cast<byte const *>( &t ), sizeof(T) );
 }
 
 #endif // gsl_FEATURE_TO_STD( BYTE_SPAN )
@@ -2135,7 +2135,7 @@ struct is_basic_string_span : is_basic_string_span_oracle< typename remove_cv<T>
 template< class T >
 gsl_api inline gsl_constexpr14 std::size_t string_length( T * ptr, std::size_t max )
 {
-    if ( ptr == gsl_nullptr || max <= 0 ) //NOLINT
+    if ( ptr == gsl_nullptr || max <= 0 )
         return 0;
 
     std::size_t len = 0;
@@ -2154,19 +2154,19 @@ template< class T >
 class basic_string_span
 {
 public:
-    typedef T element_type; //NOLINT
-    typedef span<T> span_type; //NOLINT
+    typedef T element_type;
+    typedef span<T> span_type;
 
-    typedef typename span_type::index_type index_type; //NOLINT
-    typedef typename span_type::difference_type difference_type; //NOLINT
+    typedef typename span_type::index_type index_type;
+    typedef typename span_type::difference_type difference_type;
 
-    typedef typename span_type::pointer pointer ; //NOLINT
-    typedef typename span_type::reference reference ; //NOLINT
+    typedef typename span_type::pointer pointer ;
+    typedef typename span_type::reference reference ;
 
-    typedef typename span_type::iterator iterator ; //NOLINT
-    typedef typename span_type::const_iterator const_iterator ; //NOLINT
-    typedef typename span_type::reverse_iterator reverse_iterator; //NOLINT
-    typedef typename span_type::const_reverse_iterator const_reverse_iterator; //NOLINT
+    typedef typename span_type::iterator iterator ;
+    typedef typename span_type::const_iterator const_iterator ;
+    typedef typename span_type::reverse_iterator reverse_iterator;
+    typedef typename span_type::const_reverse_iterator const_reverse_iterator;
 
     // construction:
 
@@ -2269,7 +2269,7 @@ public:
 #if gsl_FEATURE_TO_STD( WITH_CONTAINER )
 
     template< class Container >
-    gsl_api gsl_constexpr basic_string_span( with_container_t, Container & cont ) //NOLINT
+    gsl_api gsl_constexpr basic_string_span( with_container_t, Container & cont )
     : span_( with_container, cont )
     {}
 #endif
@@ -2594,20 +2594,20 @@ gsl_api inline span< const byte > as_bytes( basic_string_span<T> spn ) gsl_noexc
 // String types:
 //
 
-typedef char * zstring; //NOLINT
-typedef const char * czstring; //NOLINT
+typedef char * zstring;
+typedef const char * czstring;
 
 #if gsl_HAVE( WCHAR )
-typedef wchar_t * zwstring; //NOLINT
-typedef const wchar_t * cwzstring; //NOLINT
+typedef wchar_t * zwstring;
+typedef const wchar_t * cwzstring;
 #endif
 
-typedef basic_string_span< char > string_span; //NOLINT
-typedef basic_string_span< char const > cstring_span; //NOLINT
+typedef basic_string_span< char > string_span;
+typedef basic_string_span< char const > cstring_span;
 
 #if gsl_HAVE( WCHAR )
-typedef basic_string_span< wchar_t > wstring_span; //NOLINT
-typedef basic_string_span< wchar_t const > cwstring_span; //NOLINT
+typedef basic_string_span< wchar_t > wstring_span;
+typedef basic_string_span< wchar_t const > cwstring_span;
 #endif
 
 // to_string() allow (explicit) conversions from string_span to string
@@ -2656,7 +2656,7 @@ namespace details {
 template< class Stream >
 gsl_api void write_padding( Stream & os, std::streamsize n )
 {
-    for ( std::streamsize i = 0; i < n; ++i ) //NOLINT
+    for ( std::streamsize i = 0; i < n; ++i )
         os.rdbuf()->sputc( os.fill() );
 }
 
@@ -2665,7 +2665,7 @@ gsl_api Stream & write_to_stream( Stream & os, Span const & spn )
 {
     typename Stream::sentry sentry( os );
 
-    if ( !os ) //NOLINT
+    if ( !os )
         return os;
 
     const std::streamsize length = narrow<std::streamsize>( spn.length() );
@@ -2674,13 +2674,13 @@ gsl_api Stream & write_to_stream( Stream & os, Span const & spn )
     const bool pad = ( length < os.width() );
     const bool left_pad = pad && ( os.flags() & std::ios_base::adjustfield ) == std::ios_base::right;
 
-    if ( left_pad ) //NOLINT
+    if ( left_pad )
         write_padding( os, os.width() - length );
 
     // Write span characters
     os.rdbuf()->sputn( spn.begin(), length );
 
-    if ( pad && !left_pad ) //NOLINT
+    if ( pad && !left_pad )
         write_padding( os, os.width() - length );
 
     // Reset output stream width
@@ -2732,13 +2732,13 @@ namespace details {
 template< class T, class SizeType, const T Sentinel >
 gsl_api static span<T> ensure_sentinel( T * seq, SizeType max = std::numeric_limits<SizeType>::max() )
 {
-    typedef T * pointer; //NOLINT
+    typedef T * pointer;
 
     gsl_SUPPRESS_MSVC_WARNING( 26429, "f.23: symbol 'cur' is never tested for nullness, it can be marked as not_null" )
 
     pointer cur = seq;
 
-    while ( static_cast<SizeType>( cur - seq ) < max && *cur != Sentinel ) //NOLINT
+    while ( static_cast<SizeType>( cur - seq ) < max && *cur != Sentinel )
         ++cur;
 
     Expects( *cur == Sentinel );

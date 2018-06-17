@@ -21,9 +21,10 @@ namespace integer_codes {
       static void encode( T x, binio::bit_writer<Iterator>& storage ) {
          constexpr int digits = std::numeric_limits<T>::digits;
          // a varint can't get bigger than this, really
-         constexpr int bytes_to_reserve = ( digits + 6 ) / 7;
+         constexpr auto bytes_to_reserve
+            = static_cast<std::size_t>( digits + 6 ) / 7;
          std::array<std::uint8_t, bytes_to_reserve> temp_buffer{};
-         int pos{bytes_to_reserve - 1}; // last byte
+         auto pos{bytes_to_reserve - 1}; // last byte
          gsl::at( temp_buffer, pos-- ) = static_cast<std::uint8_t>( x & 127 );
 
          while ( x >>= 7 ) {

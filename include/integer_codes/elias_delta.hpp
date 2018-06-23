@@ -16,9 +16,7 @@ struct elias_delta {
    template <typename T, typename Iterator,
              typename = std::enable_if_t<std::is_unsigned_v<T>>>
    static void encode( T x, binary_io::bit_writer<Iterator>& storage ) {
-      if ( x == 0 ) {
-         throw std::invalid_argument( "elias delta code can't encode 0" );
-      }
+     TOY_COMPRESSION_ASSERT(elias_delta::encode, x >= 1);
       auto b = 1 + static_cast<T>( std::floor( std::log2( x ) ) );
       elias_gamma::template encode<T>( b, storage );
       storage.template write_bits<T>( ( x - ( 1 << ( b - 1 ) ) ), b - 1 );

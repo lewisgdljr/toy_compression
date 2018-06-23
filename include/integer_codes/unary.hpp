@@ -16,9 +16,7 @@ struct unary {
    template <typename T, typename Iterator,
              typename = std::enable_if_t<std::is_unsigned_v<T>>>
    static void encode( T x, binary_io::bit_writer<Iterator>& storage ) {
-      if ( x == 0 ) {
-         throw std::invalid_argument( "unary code can't encode 0" );
-      }
+     TOY_COMPRESSION_ASSERT(unary::encode, x > 0);
       T temp{x};
       while ( temp > 1 ) {
          --temp;

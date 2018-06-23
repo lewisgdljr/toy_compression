@@ -44,3 +44,32 @@ struct truncated_binary {
       return x;
    }
 };
+
+struct centered_truncated_binary {
+   template <typename T, typename Iterator,
+             typename = std::enable_if_t<std::is_unsigned_v<T>>>
+   static void encode( T x, T n, binary_io::bit_writer<Iterator>& storage ) {
+      if ( n == 0 ) {
+         throw std::invalid_argument(
+            "for the centered truncated binary code, n can't be 0" );
+      }
+      auto const top = static_cast<T>(1) << static_cast<T>(std::ceil(std::log2(n)));
+      auto const offset = n - (top >> 1);
+      auto const centered = (n + x - offset) % n;
+      truncated_binary::encode(centered, n, storage);
+   }
+
+   template <typename T, typename Iterator, typename Iterator2,
+             typename = std::enable_if_t<std::is_unsigned_v<T>>>
+   static T decode( T n, binary_io::bit_reader<Iterator, Iterator2>& storage ) {
+      if ( n == 0 ) {
+         throw std::invalid_argument(
+            "for the centered truncated binary code, n can't be 0" );
+      }
+            auto const top = static_cast<T>(1) << static_cast<T>(std::ceil(std::log2(n)));
+      auto const offset = n - (top >> 1);
+      auto const partially_decoded = truncated_binary::decode(n, storage);
+      auto decoded = (partially_decoded + offset) % n;
+      return decoded;
+   }
+};

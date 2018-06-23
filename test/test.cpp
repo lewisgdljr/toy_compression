@@ -42,7 +42,9 @@ using binary_io::make_bit_writer;
 
 int main() {
    toy_test::run_suites( {reader_suite, writer_suite, unary_suite,
-                          truncated_binary_suite, elias_gamma_suite,
+                          truncated_binary_suite, 
+			  centered_truncated_binary_suite,
+			  elias_gamma_suite,
                           elias_delta_suite, golomb_suite, rice_suite,
                           zigzag_suite, offset_zigzag_suite, varint_suite} );
 }

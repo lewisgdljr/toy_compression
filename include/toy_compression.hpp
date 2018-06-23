@@ -14,9 +14,13 @@
 #ifndef TOY_COMPRESSION_HPP_INCLUDED
 #define TOY_COMPRESSION_HPP_INCLUDED
 
-#define stringify2(x) #x
-#define stringify(x) stringify2(x)
-#define TOY_COMPRESSION_ASSERT(coder, condition) if(!(condition)) { throw  std::invalid_argument( #coder __FILE__ ":" stringify(__LINE__) " => exception(" #condition ") failed." ); }
+#define stringify2( x ) #x
+#define stringify( x ) stringify2( x )
+#define TOY_COMPRESSION_ASSERT( coder, condition )                \
+   if ( !( condition ) ) {                                        \
+      throw std::invalid_argument( #coder __FILE__ ":" stringify( \
+         __LINE__ ) " => exception(" #condition ") failed." );    \
+   }
 
 #include "gsl/gsl"
 #include <array>

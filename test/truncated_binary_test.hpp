@@ -33,7 +33,7 @@ toy_test::suite truncated_binary_suite{
              integer_codes::truncated_binary::encode<test_type>( 0, 0, writer ),
              std::invalid_argument );
        }},
-	{"encode() throws an exception for x > n",
+      {"encode() throws an exception for x > n",
        [] {
           container c;
           auto      writer = make_bit_writer( c );
@@ -66,14 +66,14 @@ toy_test::suite truncated_binary_suite{
    }};
 
 void test_centered_truncated_binary_coder( test_type value, test_type n ) {
-  container c;
+   container c;
    {
       auto writer = make_bit_writer( c );
       integer_codes::centered_truncated_binary::encode( value, n, writer );
    }
-   auto reader = make_bit_reader( c );
-   auto decoded
-      = integer_codes::centered_truncated_binary::decode<test_type>( n, reader );
+   auto reader  = make_bit_reader( c );
+   auto decoded = integer_codes::centered_truncated_binary::decode<test_type>(
+      n, reader );
    ASSERT( decoded == value );
 }
 
@@ -84,18 +84,18 @@ toy_test::suite centered_truncated_binary_suite{
        [] {
           container c;
           auto      writer = make_bit_writer( c );
-          THROWS(
-		 integer_codes::centered_truncated_binary::encode<test_type>( 1, 0, writer ),
-             std::invalid_argument );
+          THROWS( integer_codes::centered_truncated_binary::encode<test_type>(
+                     1, 0, writer ),
+                  std::invalid_argument );
        }},
 
       {"decode() throws an exception for n = 0",
        [] {
           container c( 100 );
           auto      reader = make_bit_reader( c );
-          THROWS(
-             integer_codes::centered_truncated_binary::decode<test_type>( 0, reader ),
-             std::invalid_argument );
+          THROWS( integer_codes::centered_truncated_binary::decode<test_type>(
+                     0, reader ),
+                  std::invalid_argument );
        }},
 
       {"encodes a value of 3 using n = 6",
@@ -113,84 +113,83 @@ toy_test::suite centered_truncated_binary_suite{
    }};
 
 void test_binary_in_range( test_type value, test_type low, test_type high ) {
-  container c;
+   container c;
    {
       auto writer = make_bit_writer( c );
       integer_codes::binary_in_range::encode( value, low, high, writer );
    }
    auto reader = make_bit_reader( c );
    auto decoded
-     = integer_codes::binary_in_range::decode<test_type>( low, high, reader );
+      = integer_codes::binary_in_range::decode<test_type>( low, high, reader );
    ASSERT( decoded == value );
 }
 
 toy_test::suite binary_in_range_suite{
    "Test for binary in range coder",
    {
-           {"encode() throws an exception for low = 0",
+      {"encode() throws an exception for low = 0",
        [] {
           container c;
           auto      writer = make_bit_writer( c );
-          THROWS(
-		 integer_codes::binary_in_range::encode<test_type>( 1, 0, 10, writer ),
-             std::invalid_argument );
+          THROWS( integer_codes::binary_in_range::encode<test_type>( 1, 0, 10,
+                                                                     writer ),
+                  std::invalid_argument );
        }},
 
       {"encode() throws an exception for low > high",
        [] {
           container c;
           auto      writer = make_bit_writer( c );
-          THROWS(
-		 integer_codes::binary_in_range::encode<test_type>( 1, 4, 1, writer ),
-             std::invalid_argument );
-       }},
-	
-	{"encode() throws an exception for x < low",
-       [] {
-          container c;
-          auto      writer = make_bit_writer( c );
-          THROWS(
-		 integer_codes::binary_in_range::encode<test_type>( 3, 4, 5, writer ),
-             std::invalid_argument );
-       }},
-	{"encode() throws an exception for x > high",
-       [] {
-          container c;
-          auto      writer = make_bit_writer( c );
-          THROWS(
-		 integer_codes::binary_in_range::encode<test_type>( 6, 4, 5, writer ),
-             std::invalid_argument );
+          THROWS( integer_codes::binary_in_range::encode<test_type>( 1, 4, 1,
+                                                                     writer ),
+                  std::invalid_argument );
        }},
 
-	  {"decode() throws an exception for low = 0",
+      {"encode() throws an exception for x < low",
+       [] {
+          container c;
+          auto      writer = make_bit_writer( c );
+          THROWS( integer_codes::binary_in_range::encode<test_type>( 3, 4, 5,
+                                                                     writer ),
+                  std::invalid_argument );
+       }},
+      {"encode() throws an exception for x > high",
+       [] {
+          container c;
+          auto      writer = make_bit_writer( c );
+          THROWS( integer_codes::binary_in_range::encode<test_type>( 6, 4, 5,
+                                                                     writer ),
+                  std::invalid_argument );
+       }},
+
+      {"decode() throws an exception for low = 0",
        [] {
           container c( 100 );
           auto      reader = make_bit_reader( c );
           THROWS(
-		 integer_codes::binary_in_range::decode<test_type>( 0, 10, reader ),
+             integer_codes::binary_in_range::decode<test_type>( 0, 10, reader ),
              std::invalid_argument );
        }},
-
 
       {"decode() throws an exception for low > high",
        [] {
           container c( 100 );
           auto      reader = make_bit_reader( c );
           THROWS(
-		 integer_codes::binary_in_range::decode<test_type>( 4, 1, reader ),
+             integer_codes::binary_in_range::decode<test_type>( 4, 1, reader ),
              std::invalid_argument );
        }},
 
       {"encodes a value of 3 using range = [2,6]",
-	  [] { test_binary_in_range( 3, 2, 6 ); }},
+       [] { test_binary_in_range( 3, 2, 6 ); }},
 
-	{"encodes a value of 3 using range = [1,4]",
-	  [] { test_binary_in_range( 3, 1, 4 ); }},
+      {"encodes a value of 3 using range = [1,4]",
+       [] { test_binary_in_range( 3, 1, 4 ); }},
 
       {"encodes a value of 3 using n = [1, 8]",
-	  [] { test_binary_in_range( 3, 1, 8 ); }},
+       [] { test_binary_in_range( 3, 1, 8 ); }},
 
       {"encodes a value of 7 using n = [1, 8]",
-	  [] { test_binary_in_range( 7, 1, 8 ); }},
+       [] { test_binary_in_range( 7, 1, 8 ); }},
 
    }};

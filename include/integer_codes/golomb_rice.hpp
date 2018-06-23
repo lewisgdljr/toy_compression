@@ -16,17 +16,17 @@ struct golomb {
    template <typename T, typename Iterator,
              typename = std::enable_if_t<std::is_unsigned_v<T>>>
    static void encode( T x, T b, binary_io::bit_writer<Iterator>& storage ) {
-     TOY_COMPRESSION_ASSERT(golomb::encode, x >= 1 && b >= 1);
-     auto q = ( x - 1 ) / b;
-     auto r = ( x - 1 ) % b;
-     unary::template encode<T>( q + 1, storage );
-     truncated_binary::template encode<T>( r, b, storage );
+      TOY_COMPRESSION_ASSERT( golomb::encode, x >= 1 && b >= 1 );
+      auto q = ( x - 1 ) / b;
+      auto r = ( x - 1 ) % b;
+      unary::template encode<T>( q + 1, storage );
+      truncated_binary::template encode<T>( r, b, storage );
    }
 
    template <typename T, typename Iterator, typename Iterator2,
              typename = std::enable_if_t<std::is_unsigned_v<T>>>
    static T decode( T b, binary_io::bit_reader<Iterator, Iterator2>& storage ) {
-     TOY_COMPRESSION_ASSERT(golomb::decode, b >= 1);
+      TOY_COMPRESSION_ASSERT( golomb::decode, b >= 1 );
       auto q = unary::template decode<T>( storage ) - 1;
       auto r = truncated_binary::template decode<T>( b, storage );
       return r + q * b + 1;
@@ -37,7 +37,7 @@ struct rice {
    template <typename T, typename Iterator,
              typename = std::enable_if_t<std::is_unsigned_v<T>>>
    static void encode( T x, T k, binary_io::bit_writer<Iterator>& storage ) {
-     TOY_COMPRESSION_ASSERT(rice::encode, x >= 1);
+      TOY_COMPRESSION_ASSERT( rice::encode, x >= 1 );
       auto b = static_cast<T>( 1 ) << k;
       golomb::encode( x, b, storage );
    }

@@ -29,7 +29,7 @@ ADD_CUSTOM_TARGET(
     generate_report
     DEPENDS coverage.info
     COMMAND genhtml --demangle-cpp --branch-coverage -q coverage.info --rc genhtml_branch_coverage=1 --output-directory out
-    COMMAND start out/index.html
+    COMMAND xdg-open out/index.html
     )
     
 ADD_CUSTOM_TARGET(
@@ -43,6 +43,6 @@ ADD_CUSTOM_TARGET(
     )
 
 ADD_CUSTOM_TARGET(
-    test
+    check
     DEPENDS generate_report
     )

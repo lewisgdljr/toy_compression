@@ -16,7 +16,7 @@ struct varint {
    template <typename T, typename Iterator,
              typename = std::enable_if_t<std::is_unsigned_v<T>>>
    static void encode( T x, binary_io::bit_writer<Iterator>& storage ) {
-      constexpr int digits = std::numeric_limits<T>::digits;
+      constexpr auto digits = std::numeric_limits<T>::digits;
       // a varint can't get bigger than this, really
       constexpr auto bytes_to_reserve
          = static_cast<std::size_t>( digits + 6 ) / 7;
